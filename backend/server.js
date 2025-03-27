@@ -22,8 +22,11 @@ app.use(cors({
 app.use(express.json());
 
 
-app.use((req, res, next) => {
+app.use((err, req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
+  console.error("🔥 Backend Error:", err.stack);
+  res.status(500).json({ message: "Internal Server Error", error: err.message });
+
   next();
 });
 
