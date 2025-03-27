@@ -40,6 +40,7 @@ router.post("/register", async (req, res) => {
     // Store user session
     req.session.user = user;
     await req.session.save(); 
+    console.log("User session:", req.session.user); /
 
     // Send response after session is saved
     res.status(201).json({ message: "User registered successfully", user });
