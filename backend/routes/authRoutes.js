@@ -23,7 +23,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login Route
+
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   
@@ -43,6 +44,13 @@ router.post("/login", async (req, res) => {
       if (err) {
         return res.status(500).json({ error: "Session save failed" });
       }
+
+      res.cookie("connect.sid", req.sessionID, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none"
+      });
+      
       res.json({ message: "Login successful", user });
     });
     // res.json({ message: "Login successful", user });
