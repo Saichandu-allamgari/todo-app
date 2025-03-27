@@ -8,7 +8,7 @@ const Register = () => {
   const handleRegister = async (formData) => {
     try {
       await register(formData);
-      navigate("/dashboard");
+      // navigate("/dashboard");
     } catch (error) {
       alert("Registration failed!");
     }

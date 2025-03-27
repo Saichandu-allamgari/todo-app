@@ -28,7 +28,7 @@ const Login = () => {
       if (sessionCheck.data) {
 
         
-        navigate("/dashboard");
+        // navigate("/dashboard");
       } else {
         alert("Session not set. Please try logging in again.");
       }
