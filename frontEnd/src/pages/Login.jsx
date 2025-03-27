@@ -26,6 +26,8 @@ const Login = () => {
       
       const sessionCheck = await getUser(); // ✅ Check session immediately after login
       if (sessionCheck.data) {
+
+        
         navigate("/dashboard");
       } else {
         alert("Session not set. Please try logging in again.");
