@@ -56,7 +56,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = async () => {
-    await logout();
+    // await logout();
     navigate("/login");
   };
 
