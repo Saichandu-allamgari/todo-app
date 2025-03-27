@@ -11,7 +11,7 @@ const app = express();
 app.use(cors({
   origin: "https://todo-list-apn2.netlify.app",
   credentials: true , // ✅ Allow credentials for session-based authentication
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: "GET,POST, PUT, DELETE",
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());
