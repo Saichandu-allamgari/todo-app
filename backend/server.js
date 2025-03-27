@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(cors(
   {
-  origin: "http://localhost:5173",
+  origin: "https://todo-list-apn2.netlify.app",
   credentials: true , // ✅ Allow credentials for session-based authentication
   // methods: "GET,POST, PUT, DELETE",
   // allowedHeaders: ["Content-Type", "Authorization"]
