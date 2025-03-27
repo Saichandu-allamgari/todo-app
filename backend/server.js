@@ -8,13 +8,16 @@ const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
+
+app.use(express.json());
+
 app.use(cors({
   origin: "https://todo-list-apn2.netlify.app",
   credentials: true , // ✅ Allow credentials for session-based authentication
   methods: "GET,POST, PUT, DELETE",
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
-app.use(express.json());
+
 
 
 app.use(( req, res, next) => {
@@ -35,10 +38,10 @@ app.use(session({
   }
 }));
 
-app.use((req, res, next) => {
-  console.log(`➡️ [${req.method}] ${req.url}`);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`➡️ [${req.method}] ${req.url}`);
+//   next();
+// });
 
 
 app.use("/api/auth", authRoutes);

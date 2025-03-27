@@ -10,13 +10,8 @@ router.post("/register", async (req, res) => {
   try {
     const user = await User.create({ name, email, password: hashedPassword });
     req.session.user = user;
-    req.session.save((err) => {  // ✅ Explicitly save the session
-      if (err) {
-        return res.status(500).json({ error: "Session save failed" });
-      }
-      res.status(201).json({ message: "User registered", user });
-    });
 
+    await req.session.save();
     // res.status(201).json({ message: "User registered", user });
   } catch (err) {
     res.status(400).json({ error: "User already exists" });
@@ -40,20 +35,8 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.user = user;
-    req.session.save((err) => {  // ✅ Save session before responding
-      if (err) {
-        return res.status(500).json({ error: "Session save failed" });
-      }
-
-      res.cookie("connect.sid", req.sessionID, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "none"
-      });
-      
-      res.json({ message: "Login successful", user });
-    });
-    // res.json({ message: "Login successful", user });
+    await req.session.save(); 
+    res.json({ message: "Login successful", user });
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
