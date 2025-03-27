@@ -4,17 +4,49 @@ const User = require("../models/User");
 const router = express.Router();
 
 // Register
-router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  try {
-    const user = await User.create({ name, email, password: hashedPassword });
-    req.session.user = user;
+// router.post("/register", async (req, res) => {
+//   const { name, email, password } = req.body;
+//   const hashedPassword = await bcrypt.hash(password, 10);
+//   try {
+//     const user = await User.create({ name, email, password: hashedPassword });
+//     req.session.user = user;
 
-    await req.session.save();
-    // res.status(201).json({ message: "User registered", user });
+//     await req.session.save();
+//     // res.status(201).json({ message: "User registered", user });
+//   } catch (err) {
+//     res.status(400).json({ error: "User already exists" });
+//   }
+// });
+router.post("/register", async (req, res) => {
+  try {
+    console.log("Received Data:", req.body); // ✅ Debug request data
+
+    // Validate request body
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    // Hash password and create user
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.create({ name, email, password: hashedPassword });
+
+    // Store user session
+    req.session.user = user;
+    await req.session.save(); 
+
+    // Send response after session is saved
+    res.status(201).json({ message: "User registered successfully", user });
+
   } catch (err) {
-    res.status(400).json({ error: "User already exists" });
+    console.error("Registration Error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
