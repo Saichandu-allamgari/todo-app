@@ -6,13 +6,13 @@ const API = axios.create({
 });
 
 // Auth API
-export const register = (data) => API.post("/auth/register", data);
-export const login = (data) => API.post("/auth/login", data);
-export const logout = () => API.post("/auth/logout");
-export const getUser = () => API.get("/auth/me");
+export const register = (data) => API.post("/api/auth/register", data);
+export const login = (data) => API.post("/api/auth/login", data);
+export const logout = () => API.post("/api/auth/logout");
+export const getUser = () => API.get("/api/auth/me");
 
 // Task API
-export const fetchTasks = () => API.get("/tasks");
-export const addTask = (task) => API.post("/tasks", task);
-export const updateTask = (id, task) => API.put(`/tasks/${id}`, task);
-export const deleteTask = (id) => API.delete(`/tasks/${id}`);
+export const fetchTasks = () => API.get("/api/tasks");
+export const addTask = (task) => API.post("/api/tasks", task);
+export const updateTask = (id, task) => API.put(`/api/tasks/${id}`, task);
+export const deleteTask = (id) => API.delete(`/api/tasks/${id}`);
