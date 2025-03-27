@@ -35,4 +35,4 @@ export const fetchTasks = () => API.get("/api/tasks");
 export const addTask = (task) => API.post("/api/tasks", task);
 export const updateTask = (id, task) => API.put(`/api/tasks/${id}`, task);
 export const deleteTask = (id) => API.delete(`/api/tasks/${id}`);
-api
+
