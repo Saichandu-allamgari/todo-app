@@ -11,12 +11,14 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({
-  origin: "https://todo-list-apn2.netlify.app",
+app.use(cors(
+  {
+  origin: "http://localhost:5173",
   credentials: true , // ✅ Allow credentials for session-based authentication
-  methods: "GET,POST, PUT, DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+  // methods: "GET,POST, PUT, DELETE",
+  // allowedHeaders: ["Content-Type", "Authorization"]
+}
+));
 
 
 
@@ -26,17 +28,18 @@ app.use(( req, res, next) => {
   next();
 });
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-  cookie: {
-    secure: process.env.NODE_ENV === "production",  // Only secure in production
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
-  }
-}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: false,
+//   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+//   cookie: {
+//     secure: process.env.NODE_ENV === "production",  // Only secure in production
+//     httpOnly: true,
+//     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
+//   }
+// }));
+
 
 // app.use((req, res, next) => {
 //   console.log(`➡️ [${req.method}] ${req.url}`);

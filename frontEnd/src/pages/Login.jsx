@@ -8,7 +8,7 @@ const Login = () => {
   const handleLogin = async (formData) => {
     try {
       await login(formData);
-      // navigate("/dashboard"); // Redirect to Dashboard if login is successful
+      navigate("/dashboard"); // Redirect to Dashboard if login is successful
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // If user doesn't exist, redirect to Register page

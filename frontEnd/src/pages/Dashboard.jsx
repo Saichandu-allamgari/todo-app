@@ -14,7 +14,7 @@ const Dashboard = () => {
       try {
         const userData = await getUser();
         if (!userData.data) {
-          navigate("/login");
+          // navigate("/login");
           return;
         }
         setUser(userData.data);

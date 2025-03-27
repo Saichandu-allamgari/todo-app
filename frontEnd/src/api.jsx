@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://todo-app-1-8rcz.onrender.com", // Backend URL
+  baseURL: "http://localhost:5000", // Backend URL
   withCredentials: true, // Allows session cookies
 });
 
