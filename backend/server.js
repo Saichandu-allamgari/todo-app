@@ -35,11 +35,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-  cookie: {
-    secure: process.env.NODE_ENV === "production",  // Use secure cookies in production
-    httpOnly: true,
-    sameSite: "lax"  // Helps with cross-site requests
-  }
+  cookie: { secure: true, httpOnly: true, sameSite: "none" }
 }));
 
 app.use("/api/auth", authRoutes);
