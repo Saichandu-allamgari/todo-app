@@ -9,23 +9,14 @@ const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 app.use(cors({
-  origin: function (origin, callback) {
-    const allowedOrigins = ["https://todo-list-apn2.netlify.app"];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true  // ✅ Allow credentials
+  origin: "https://todo-list-apn2.netlify.app",
+  credentials: true  // ✅ Allow credentials for session-based authentication
 }));
 app.use(express.json());
 
 
-app.use((err, req, res, next) => {
+app.use(( req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
-  console.error("🔥 Backend Error:", err.stack);
-  res.status(500).json({ message: "Internal Server Error", error: err.message });
 
   next();
 });
@@ -35,8 +26,18 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-  cookie: { secure: true, httpOnly: true, sameSite: "none" }
+  cookie: {
+    secure: process.env.NODE_ENV === "production",  // Only secure in production
+    httpOnly: true,
+    sameSite: "none"
+  }
 }));
+
+app.use((req, res, next) => {
+  console.log(`➡️ [${req.method}] ${req.url}`);
+  next();
+});
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);

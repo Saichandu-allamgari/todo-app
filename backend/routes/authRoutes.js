@@ -38,16 +38,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Login
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ error: "Invalid credentials" });
-  }
-  req.session.user = user;
-  res.json({ message: "Login successful", user });
-});
 
 // Logout
 router.post("/logout", (req, res) => {
