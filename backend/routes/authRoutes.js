@@ -67,9 +67,14 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    req.session.user = user;
+    req.session.user =  {
+      id: user._id,
+      name: user.name,
+      email: user.email
+    };
+
     await req.session.save(); 
-    res.json({ message: "Login successful", user });
+    res.json({ message: "Login successful", user : req.session.user });
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }

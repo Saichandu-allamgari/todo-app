@@ -22,15 +22,20 @@ const Login = () => {
 
   const handleLogin = async (formData) => {
     try {
-      await login(formData);
-      const user = await getUser(); // ✅ Check session immediately after login
-      if (user) {
+      const response = await login(formData);
+      
+      const sessionCheck = await getUser(); // ✅ Check session immediately after login
+      if (sessionCheck.data) {
         navigate("/dashboard");
       } else {
         alert("Session not set. Please try logging in again.");
       }
     } catch (error) {
-      alert("Login failed! Please check your credentials.");
+      if (error.response && error.response.status === 401) {
+        alert("Invalid credentials");
+      } else {
+        alert("Login failed! Please try again later.");
+      }
     }
   };
   
