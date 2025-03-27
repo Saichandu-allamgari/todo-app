@@ -10,7 +10,9 @@ const taskRoutes = require("./routes/taskRoutes");
 const app = express();
 app.use(cors({
   origin: "https://todo-list-apn2.netlify.app",
-  credentials: true  // ✅ Allow credentials for session-based authentication
+  credentials: true , // ✅ Allow credentials for session-based authentication
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 app.use(express.json());
 
@@ -27,7 +29,7 @@ app.use(session({
   saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: {
-    secure: true,  // Only secure in production
+    secure: process.env.NODE_ENV === "production",  // Only secure in production
     httpOnly: true,
     sameSite: "none"
   }
